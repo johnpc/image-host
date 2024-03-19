@@ -1,9 +1,21 @@
 "use client";
-import {StorageManager, StorageImage} from "@aws-amplify/ui-react-storage";
+import "@aws-amplify/ui-react/styles.css";
+import {StorageManager} from "@aws-amplify/ui-react-storage";
 import {useState} from "react";
-import '@aws-amplify/ui-react/styles.css';
-import { Amplify } from 'aws-amplify';
-import config from '../../amplifyconfiguration.json';
+import {Amplify} from "aws-amplify";
+import {CopyToClipboard} from "react-copy-to-clipboard";
+import {
+  Button,
+  Card,
+  Link,
+  Flex,
+  useTheme,
+} from "@aws-amplify/ui-react";
+
+import {Footer} from "./components/footer";
+import {Header} from "./components/header";
+
+import config from "../../amplifyconfiguration.json";
 Amplify.configure(config);
 
 function uuidv4() {
@@ -16,15 +28,19 @@ function uuidv4() {
 }
 
 export default function Home() {
-  const [uuid, setUuid] = useState(uuidv4());
+  const {tokens} = useTheme();
+  const [uuid] = useState(uuidv4());
+  const [copied, setCopied] = useState(false);
   const [imageKey, setImageKey] = useState<string>();
-
+  const href = window.location.href;
   const onUploadSuccess = (event: {key?: string}) => {
     setImageKey(event.key);
   };
 
+  const imageUrl = `${href}${href.endsWith("/") ? "" : "/"}images/${imageKey}`;
   return (
     <>
+      <Header />
       <StorageManager
         acceptedFileTypes={["image/*"]}
         accessLevel="guest"
@@ -33,11 +49,47 @@ export default function Home() {
         path={`${uuid}-`}
         isResumable
       />
-      {imageKey ? <>
-        <StorageImage alt={uuid} imgKey={imageKey} accessLevel="guest" />;
-        <hr />
-        <a href={`images/${imageKey}`}>Permalink: {imageKey}</a>
-      </> : ''}
+      {imageKey ? (
+        <>
+          <Card variation="outlined" textAlign={"center"}>
+            <Flex direction="row" alignItems="flex-start">
+              <Flex
+                direction="column"
+                alignItems="flex-start"
+                gap={tokens.space.xs}
+              >
+                <Link
+                  href={`/images/${imageKey}`}
+                  borderStyle={"dotted"}
+                  margin={"5px"}
+                >
+                  {imageUrl}
+                </Link>
+              </Flex>
+              <Flex
+                direction="column"
+                alignItems="flex-start"
+                gap={tokens.space.xs}
+              >
+                <CopyToClipboard
+                  text={`${imageUrl}`}
+                  onCopy={() => {
+                    setCopied(true);
+                    setTimeout(() => setCopied(false), 1000);
+                  }}
+                >
+                  <Button colorTheme={copied ? "success" : undefined}>
+                    {copied ? "✅" : "Copy to Clipboard"}
+                  </Button>
+                </CopyToClipboard>
+              </Flex>
+            </Flex>
+          </Card>
+        </>
+      ) : (
+        ""
+      )}
+      <Footer />
     </>
   );
 }
