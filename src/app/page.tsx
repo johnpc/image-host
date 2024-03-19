@@ -1,19 +1,13 @@
 "use client";
 import "@aws-amplify/ui-react/styles.css";
-import {StorageManager} from "@aws-amplify/ui-react-storage";
-import {useState} from "react";
-import {Amplify} from "aws-amplify";
-import {CopyToClipboard} from "react-copy-to-clipboard";
-import {
-  Button,
-  Card,
-  Link,
-  Flex,
-  useTheme,
-} from "@aws-amplify/ui-react";
+import { StorageManager } from "@aws-amplify/ui-react-storage";
+import { useEffect, useState } from "react";
+import { Amplify } from "aws-amplify";
+import { CopyToClipboard } from "react-copy-to-clipboard";
+import { Button, Card, Link, Flex, useTheme } from "@aws-amplify/ui-react";
 
-import {Footer} from "./components/footer";
-import {Header} from "./components/header";
+import { Footer } from "./components/footer";
+import { Header } from "./components/header";
 
 import config from "../../amplifyconfiguration.json";
 Amplify.configure(config);
@@ -28,12 +22,16 @@ function uuidv4() {
 }
 
 export default function Home() {
-  const {tokens} = useTheme();
+  const [href, setHref] = useState<string>("");
+  const { tokens } = useTheme();
   const [uuid] = useState(uuidv4());
   const [copied, setCopied] = useState(false);
   const [imageKey, setImageKey] = useState<string>();
-  const href = window.location.href;
-  const onUploadSuccess = (event: {key?: string}) => {
+  useEffect(() => {
+    setHref(window.location.href);
+  }, []);
+
+  const onUploadSuccess = (event: { key?: string }) => {
     setImageKey(event.key);
   };
 

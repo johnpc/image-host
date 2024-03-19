@@ -4,7 +4,7 @@ import { generateServerClientUsingCookies } from "@aws-amplify/adapter-nextjs/ap
 
 export const storage = defineStorage({
   name: "imageHost",
-  access: ({authenticated, guest}) => ({
-    '/*': [authenticated.to(['read', 'write']), guest.to(['read', 'write'])],
+  access: ({ authenticated, guest }) => ({
+    "/*": [authenticated.to(["read", "write"]), guest.to(["read", "write"])],
   }),
 });
