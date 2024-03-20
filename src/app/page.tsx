@@ -4,7 +4,14 @@ import { StorageManager } from "@aws-amplify/ui-react-storage";
 import { useEffect, useState } from "react";
 import { Amplify } from "aws-amplify";
 import { CopyToClipboard } from "react-copy-to-clipboard";
-import { Button, Card, Link, Flex, useTheme } from "@aws-amplify/ui-react";
+import {
+  Button,
+  Card,
+  Link,
+  Flex,
+  useTheme,
+  Grid,
+} from "@aws-amplify/ui-react";
 
 import { Footer } from "./components/footer";
 import { Header } from "./components/header";
@@ -50,38 +57,34 @@ export default function Home() {
       {imageKey ? (
         <>
           <Card variation="outlined" textAlign={"center"}>
-            <Flex direction="row" alignItems="flex-start">
-              <Flex
-                direction="column"
-                alignItems="flex-start"
-                gap={tokens.space.xs}
+            <Grid
+              columnGap="0.5rem"
+              rowGap="0.5rem"
+              templateColumns={{ base: "1fr", large: "1fr 1fr" }}
+              templateRows={{ base: "1fr 1fr", large: "1fr" }}
+            >
+              <Link
+                padding={"10px"}
+                width={"100%"}
+                margin={"auto"}
+                textAlign={"center"}
+                href={`/images/${imageKey}`}
+                borderStyle={"dotted"}
               >
-                <Link
-                  href={`/images/${imageKey}`}
-                  borderStyle={"dotted"}
-                  margin={"5px"}
-                >
-                  {imageUrl}
-                </Link>
-              </Flex>
-              <Flex
-                direction="column"
-                alignItems="flex-start"
-                gap={tokens.space.xs}
+                {imageUrl}
+              </Link>
+              <CopyToClipboard
+                text={imageUrl}
+                onCopy={() => {
+                  setCopied(true);
+                  setTimeout(() => setCopied(false), 1000);
+                }}
               >
-                <CopyToClipboard
-                  text={`${imageUrl}`}
-                  onCopy={() => {
-                    setCopied(true);
-                    setTimeout(() => setCopied(false), 1000);
-                  }}
-                >
-                  <Button colorTheme={copied ? "success" : undefined}>
-                    {copied ? "✅" : "Copy to Clipboard"}
-                  </Button>
-                </CopyToClipboard>
-              </Flex>
-            </Flex>
+                <Button colorTheme={copied ? "success" : undefined}>
+                  {copied ? "✅" : "Copy to Clipboard"}
+                </Button>
+              </CopyToClipboard>
+            </Grid>
           </Card>
         </>
       ) : (
