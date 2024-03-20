@@ -8,8 +8,6 @@ import {
   Button,
   Card,
   Link,
-  Flex,
-  useTheme,
   Grid,
 } from "@aws-amplify/ui-react";
 
@@ -30,7 +28,6 @@ function uuidv4() {
 
 export default function Home() {
   const [href, setHref] = useState<string>("");
-  const { tokens } = useTheme();
   const [uuid] = useState(uuidv4());
   const [copied, setCopied] = useState(false);
   const [imageKey, setImageKey] = useState<string>();
