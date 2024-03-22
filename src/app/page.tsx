@@ -17,41 +17,49 @@ import { Header } from "./components/header";
 import config from "../../amplifyconfiguration.json";
 Amplify.configure(config);
 
-function uuidv4() {
-  return "10000000-1000-4000-8000-100000000000".replace(/[018]/g, (c: any) =>
-    (
-      c ^
-      (crypto.getRandomValues(new Uint8Array(1))[0] & (15 >> (c / 4)))
-    ).toString(16)
-  );
-}
+const makeHash = (length: number): string => {
+  let result = "";
+  const characters =
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  const charactersLength = characters.length;
+  let counter = 0;
+  while (counter < length) {
+    result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    counter += 1;
+  }
+  return result;
+};
 
 export default function Home() {
   const [href, setHref] = useState<string>("");
-  const [uuid] = useState(uuidv4());
+  const [uuid] = useState(makeHash(5));
   const [copied, setCopied] = useState(false);
-  const [imageKey, setImageKey] = useState<string>();
+  const [fileKey, setFileKey] = useState<string>();
   useEffect(() => {
     setHref(window.location.href);
   }, []);
 
   const onUploadSuccess = (event: { key?: string }) => {
-    setImageKey(event.key);
+    setFileKey(event.key);
+  };
+  const onUploadError = (event: any) => {
+    console.log(event);
   };
 
-  const imageUrl = `${href}${href.endsWith("/") ? "" : "/"}images/${imageKey}`;
+  const fileUrl = `${href}${href.endsWith("/") ? "" : "/"}d/${fileKey}`;
   return (
     <>
       <Header />
       <StorageManager
-        acceptedFileTypes={["image/*"]}
+        acceptedFileTypes={["*"]}
         accessLevel="guest"
         maxFileCount={1}
         onUploadSuccess={onUploadSuccess}
+        onUploadError={onUploadError}
         path={`${uuid}-`}
         isResumable
       />
-      {imageKey ? (
+      {fileKey ? (
         <>
           <Card variation="outlined" textAlign={"center"}>
             <Grid
@@ -65,13 +73,13 @@ export default function Home() {
                 width={"100%"}
                 margin={"auto"}
                 textAlign={"center"}
-                href={`/images/${imageKey}`}
+                href={`/d/${fileKey}`}
                 borderStyle={"dotted"}
               >
-                {imageUrl}
+                {fileUrl}
               </Link>
               <CopyToClipboard
-                text={imageUrl}
+                text={fileUrl}
                 onCopy={() => {
                   setCopied(true);
                   setTimeout(() => setCopied(false), 1000);
