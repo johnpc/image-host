@@ -5,7 +5,7 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "A2 Imgur",
+  title: "files.jpc.io",
   description: "Static file hosting",
 };
 

@@ -1,6 +1,6 @@
-# a2imgur
+# files.jpc.io
 
-A free file uploading website available at [a2imgur.com](https://a2imgur.com)
+A free file uploading website available at [files.jpc.io](https://files.jpc.io)
 
 ## Install dependencies
 

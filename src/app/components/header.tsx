@@ -23,7 +23,7 @@ export const Header = () => {
             alignItems="flex-start"
             gap={tokens.space.xs}
           >
-            <Heading level={1}>A2 IMGUR</Heading>
+            <Heading level={1}>files.jpc.io</Heading>
 
             <Text as="span">
               Free static file hosting. No logins, no limits, no ads, no BS.

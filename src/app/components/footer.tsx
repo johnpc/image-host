@@ -24,14 +24,14 @@ export const Footer = () => {
             gap={tokens.space.xs}
           >
             <Heading level={6}>
-              A2Imgur is free to use, but our hosting costs are not— donations
+              files.jpc.io is free to use, but our hosting costs are not— donations
               are what keep us alive, free from ads, and fast.
             </Heading>
             <Text as="span"></Text>
             <Flex direction="row" alignItems="flex-start" gap={tokens.space.xs}>
               <Button
                 as="a"
-                href="bitcoin:bc1q5k3w6cn9sd263hyv8eamvwrnzm0l6slcn49xd0?label=a2imgur&message=Hosting%20Costs"
+                href="bitcoin:bc1q5k3w6cn9sd263hyv8eamvwrnzm0l6slcn49xd0?label=files.jpc.io&message=Hosting%20Costs"
               >
                 <Image alt="bitcoin" src="/bitcoin.png" /> &nbsp; Bitcoin
               </Button>
