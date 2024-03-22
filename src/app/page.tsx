@@ -40,7 +40,7 @@ export default function Home() {
   }, []);
 
   const onUploadSuccess = (event: { key?: string }) => {
-    setFileKey(event.key);
+    setFileKey(encodeURI(event.key!));
   };
   const onUploadError = (event: any) => {
     console.log(event);
