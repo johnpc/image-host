@@ -4,17 +4,12 @@ import { StorageManager } from "@aws-amplify/ui-react-storage";
 import { useEffect, useState } from "react";
 import { Amplify } from "aws-amplify";
 import { CopyToClipboard } from "react-copy-to-clipboard";
-import {
-  Button,
-  Card,
-  Link,
-  Grid,
-} from "@aws-amplify/ui-react";
+import { Button, Card, Link, Grid } from "@aws-amplify/ui-react";
 
 import { Footer } from "./components/footer";
 import { Header } from "./components/header";
 
-import config from "../../amplifyconfiguration.json";
+import config from "../../amplify_outputs.json";
 Amplify.configure(config);
 
 const makeHash = (length: number): string => {
@@ -40,7 +35,7 @@ export default function Home() {
   }, []);
 
   const onUploadSuccess = (event: { key?: string }) => {
-    setFileKey(encodeURI(event.key!));
+    setFileKey(encodeURI(event.key!.substring("public/".length)));
   };
   const onUploadError = (event: any) => {
     console.log(event);
@@ -56,7 +51,7 @@ export default function Home() {
         maxFileCount={1}
         onUploadSuccess={onUploadSuccess}
         onUploadError={onUploadError}
-        path={`${uuid}-`}
+        path={`public/${uuid}-`}
         isResumable
       />
       {fileKey ? (

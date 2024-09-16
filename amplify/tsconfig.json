@@ -9,7 +9,8 @@
     "strict": true,
     "skipLibCheck": true,
     "paths": {
-      "@env/*": ["../.amplify/function-env/*"]
+      "$amplify/*": ["../.amplify/generated/*"]
     }
-  }
+  },
+  "exclude": ["../.amplify"]
 }

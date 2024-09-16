@@ -24,8 +24,8 @@ export const Footer = () => {
             gap={tokens.space.xs}
           >
             <Heading level={6}>
-              files.jpc.io is free to use, but our hosting costs are not— donations
-              are what keep us alive, free from ads, and fast.
+              files.jpc.io is free to use, but our hosting costs are not—
+              donations are what keep us alive, free from ads, and fast.
             </Heading>
             <Text as="span"></Text>
             <Flex direction="row" alignItems="flex-start" gap={tokens.space.xs}>

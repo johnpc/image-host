@@ -3,7 +3,7 @@ import { cookies } from "next/headers";
 import { createServerRunner } from "@aws-amplify/adapter-nextjs";
 import { fetchAuthSession } from "aws-amplify/auth/server";
 
-import config from "../../../amplifyconfiguration.json";
+import config from "../../../amplify_outputs.json";
 
 export const { runWithAmplifyServerContext } = createServerRunner({
   config,
